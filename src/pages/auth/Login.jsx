@@ -1,5 +1,6 @@
 import { Formik, Field, Form } from 'formik';
 import { LockClosedIcon } from '@heroicons/react/20/solid';
+import { toast } from 'react-toastify';
 
 const initialValues = {
   email: '',
@@ -8,7 +9,9 @@ const initialValues = {
 
 export default function Login() {
   const onSubmit = async (values) => {
-    alert(values);
+    try {
+      toast.success('Login successful');
+    } catch (err) {}
   };
 
   return (
