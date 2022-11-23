@@ -4,6 +4,7 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import Dashboard from './pages/Dashboard';
 
 import { getAccessToken } from './utils/storage';
 
@@ -69,10 +70,6 @@ function App() {
       </Routes>
     </>
   );
-}
-
-function Dashboard() {
-  return <div>Dashboard Page</div>;
 }
 
 function PublicPage() {

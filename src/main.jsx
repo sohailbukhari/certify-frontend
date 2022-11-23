@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ToastContainer hideProgressBar={true} autoClose={1000} />
+    <ToastContainer hideProgressBar={true} autoClose={1000} position='bottom-right' />
     <BrowserRouter>
       <App />
     </BrowserRouter>
