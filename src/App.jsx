@@ -5,6 +5,7 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Dashboard from './pages/Dashboard';
+import Landing from './pages/Landing';
 
 import { getAccessToken } from './utils/storage';
 
@@ -34,7 +35,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<PublicPage />} />
+        <Route path='/' element={<Landing />} />
         <Route
           path='/login'
           element={
@@ -70,10 +71,6 @@ function App() {
       </Routes>
     </>
   );
-}
-
-function PublicPage() {
-  return <div>Landing Home Page</div>;
 }
 
 export default App;
