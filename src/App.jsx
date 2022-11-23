@@ -18,14 +18,46 @@ function RequireAuth({ children }) {
   return children;
 }
 
+function RequireNoAuth({ children }) {
+  let location = useLocation();
+  const accessToken = getAccessToken();
+
+  if (accessToken) {
+    return <Navigate to='/dashboard' state={{ from: location }} replace />;
+  }
+
+  return children;
+}
+
 function App() {
   return (
     <>
       <Routes>
         <Route path='/' element={<PublicPage />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route
+          path='/login'
+          element={
+            <RequireNoAuth>
+              <Login />
+            </RequireNoAuth>
+          }
+        />
+        <Route
+          path='/register'
+          element={
+            <RequireNoAuth>
+              <Register />
+            </RequireNoAuth>
+          }
+        />
+        <Route
+          path='/forgot-password'
+          element={
+            <RequireNoAuth>
+              <ForgotPassword />
+            </RequireNoAuth>
+          }
+        />
         <Route
           path='/dashboard'
           element={
