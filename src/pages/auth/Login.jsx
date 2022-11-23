@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import http from '../../utils/http';
 
 import { setAccessToken } from '../../utils/storage';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const initialValues = {
   email: '',
@@ -13,13 +13,13 @@ const initialValues = {
 };
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const onSubmit = async (values) => {
     try {
       const res = await http.post('/users/login', values);
-
-      console.log(res.data);
       setAccessToken(res.data.data.access_token);
-
+      navigate('/dashboard');
       toast.success('Login successful');
     } catch (err) {
       if (err.response.status === 401) {

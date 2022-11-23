@@ -5,12 +5,13 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 
+import { getAccessToken } from './utils/storage';
+
 function RequireAuth({ children }) {
-  const logged_in = false;
-
   let location = useLocation();
+  const accessToken = getAccessToken();
 
-  if (!logged_in) {
+  if (!accessToken) {
     return <Navigate to='/login' state={{ from: location }} replace />;
   }
 
