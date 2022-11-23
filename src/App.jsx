@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import ForgotPassword from './pages/auth/ForgotPassword';
 
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
@@ -23,6 +24,7 @@ function App() {
         <Route path='/' element={<PublicPage />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route
           path='/dashboard'
           element={

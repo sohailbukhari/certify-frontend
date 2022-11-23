@@ -7,19 +7,15 @@ import { Link } from 'react-router-dom';
 
 const initialValues = {
   email: '',
-  password: '',
-  role: 'applicant',
 };
 
-export default function Register() {
+export default function ForgotPassword() {
   const onSubmit = async (values) => {
     try {
-      await http.post('/users/register', values);
-      toast.success('Register successful');
+      await http.post('/users/forgot-password', values);
+      toast.success('Email Sent');
     } catch (err) {
-      if (err.response.status === 422) {
-        toast.error('Email already registered');
-      } else toast.error('Oops! Something went wrong');
+      toast.error('Oops! Something went wrong');
     }
   };
 
@@ -29,7 +25,7 @@ export default function Register() {
         <div className='w-full max-w-md space-y-8'>
           <div>
             <img className='mx-auto h-12 w-auto' src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600' alt='Your Company' />
-            <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>Register your account</h2>
+            <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>Forgot Password?</h2>
           </div>
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             <Form className='mt-8 space-y-6'>
@@ -49,36 +45,6 @@ export default function Register() {
                     placeholder='Email address'
                   />
                 </div>
-                <div>
-                  <label htmlFor='password' className='sr-only'>
-                    Password
-                  </label>
-                  <Field
-                    id='password'
-                    name='password'
-                    type='password'
-                    autoComplete='current-password'
-                    required
-                    className='relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
-                    placeholder='Password'
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor='password' className='sr-only'>
-                  Account Type
-                </label>
-                <Field
-                  id='role'
-                  name='role'
-                  as='select'
-                  required
-                  className='relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
-                  placeholder='role'>
-                  <option value={'applicant'}>Applicant</option>
-                  <option value='hirer'>Hirer</option>
-                </Field>
               </div>
 
               <div>
@@ -88,15 +54,8 @@ export default function Register() {
                   <span className='absolute inset-y-0 left-0 flex items-center pl-3'>
                     <ArrowRightOnRectangleIcon className='h-5 w-5 text-indigo-500 group-hover:text-indigo-400' aria-hidden='true' />
                   </span>
-                  Register
+                  Submit
                 </button>
-              </div>
-
-              <div className='text-sm text-center'>
-                Already have an account?{' '}
-                <Link to='/login' className='font-medium text-indigo-600 hover:text-indigo-500'>
-                  Login
-                </Link>
               </div>
             </Form>
           </Formik>

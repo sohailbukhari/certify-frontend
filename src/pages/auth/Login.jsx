@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import http from '../../utils/http';
 
 import { setAccessToken } from '../../utils/storage';
+import { Link } from 'react-router-dom';
 
 const initialValues = {
   email: '',
@@ -78,9 +79,9 @@ export default function Login() {
                 </div>
 
                 <div className='text-sm'>
-                  <a href='#' className='font-medium text-indigo-600 hover:text-indigo-500'>
+                  <Link to='/forgot-password' className='font-medium text-indigo-600 hover:text-indigo-500'>
                     Forgot your password?
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -93,6 +94,12 @@ export default function Login() {
                   </span>
                   Sign in
                 </button>
+              </div>
+              <div className='text-sm text-center'>
+                Don't have an account?{' '}
+                <Link to='/register' className='font-medium text-indigo-600 hover:text-indigo-500'>
+                  Register Now
+                </Link>
               </div>
             </Form>
           </Formik>
