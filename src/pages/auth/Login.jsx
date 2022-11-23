@@ -1,11 +1,11 @@
 import { Formik, Field, Form } from 'formik';
-import { LockClosedIcon } from '@heroicons/react/20/solid';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { LockClosedIcon } from '@heroicons/react/20/solid';
 
 import http from '../../utils/http';
 
-import { setAccessToken } from '../../utils/storage';
-import { Link, useNavigate } from 'react-router-dom';
+import { setAccessToken, setUser } from '../../utils/storage';
 
 const initialValues = {
   email: '',
@@ -18,7 +18,9 @@ export default function Login() {
   const onSubmit = async (values) => {
     try {
       const res = await http.post('/users/login', values);
-      setAccessToken(res.data.data.access_token);
+      const data = res.data.data;
+      setAccessToken(data.access_token);
+      setUser(data);
       navigate('/dashboard');
       toast.success('Login successful');
     } catch (err) {

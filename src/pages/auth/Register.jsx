@@ -1,9 +1,9 @@
 import { Formik, Field, Form } from 'formik';
-import { ArrowRightOnRectangleIcon } from '@heroicons/react/20/solid';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { ArrowRightOnRectangleIcon } from '@heroicons/react/20/solid';
 
 import http from '../../utils/http';
-import { Link } from 'react-router-dom';
 
 const initialValues = {
   email: '',
@@ -12,10 +12,13 @@ const initialValues = {
 };
 
 export default function Register() {
+  const navigate = useNavigate();
+
   const onSubmit = async (values) => {
     try {
       await http.post('/users/register', values);
       toast.success('Register successful');
+      navigate('/login');
     } catch (err) {
       if (err.response.status === 422) {
         toast.error('Email already registered');
