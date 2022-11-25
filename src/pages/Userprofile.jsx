@@ -1,7 +1,7 @@
 import React from "react";
 import AdminHeader from "../components/common/headers/AdminHeader";
-import UserProfile from "../components/UserProfile";
-const Profile = () => {
+import Settings from "../components/Settings";
+const Userrofile = () => {
   return (
     <div className="min-h-full">
       <AdminHeader />
@@ -18,7 +18,7 @@ const Profile = () => {
           <div className="px-4 py-6 sm:px-0">
             <div className="h-96 rounded-lg border-4 border-dashed border-gray-200 items-center">
               <div className="justify-center">
-                <UserProfile />
+                <Settings />
               </div>
             </div>
             {/* /End replace */}
@@ -29,4 +29,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Userrofile;

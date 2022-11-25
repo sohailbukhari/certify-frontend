@@ -189,7 +189,7 @@ const AboutYou = ({ user, mutate }) => {
   );
 };
 
-const UserProfile = () => {
+const Settings = () => {
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const user = getUser();
@@ -261,4 +261,4 @@ const UserProfile = () => {
     </div>
   );
 };
-export default UserProfile;
+export default Settings;

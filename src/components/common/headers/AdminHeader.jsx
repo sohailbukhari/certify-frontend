@@ -25,7 +25,7 @@ const navigation = [
   { name: "Dashboard", href: "#", current: true },
   { name: "Certificates", href: "#", current: false },
 ];
-const userNavigation = [{ name: "Your Profile", href: "/profile" }];
+const userNavigation = [{ name: "Your Profile", href: "/userprofile" }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

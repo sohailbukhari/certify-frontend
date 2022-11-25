@@ -6,7 +6,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Dashboard from "./pages/Dashboard";
 import Landing from "./pages/Landing";
-import Profile from "./pages/Profile";
+import Userprofile from "./pages/Userprofile";
 
 import { getAccessToken } from "./utils/storage";
 
@@ -70,10 +70,10 @@ function App() {
           }
         />
         <Route
-          path="/profile"
+          path="/userprofile"
           element={
             <RequireAuth>
-              <Profile />
+              <Userprofile />
             </RequireAuth>
           }
         />
