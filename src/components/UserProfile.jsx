@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useRef } from "react";
-import http from "../../utils/http";
-import { getUser, getAccessToken } from "../../utils/storage";
+import http from "../utils/http";
+import { getUser, getAccessToken } from "../utils/storage";
 import { toast } from "react-toastify";
 
 const Auth = () => {
