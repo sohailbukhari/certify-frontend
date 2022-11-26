@@ -1,14 +1,16 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ForgotPassword from './pages/auth/ForgotPassword';
 
+import Landing from './pages/Landing';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
-import Dashboard from './pages/Dashboard';
-import Landing from './pages/Landing';
+
 import Layout from './pages/Layout';
-import Error404 from './pages/Error404';
+import Dashboard from './pages/Dashboard';
 import Setting from './pages/Setting';
+import Exam from './pages/Exam';
+import Error404 from './pages/Error404';
 
 import { getAccessToken } from './utils/storage';
 
@@ -62,11 +64,20 @@ function App() {
           </RequireNoAuth>
         }
       />
-      <Route path='/dashboard' element={<Layout />}>
+      <Route
+        path='/dashboard'
+        element={
+          <RequireAuth>
+            <Layout />
+          </RequireAuth>
+        }>
         <Route path='' element={<Dashboard />} />
         <Route path='setting' element={<Setting />} />
+        <Route path='exam' element={<Exam />} />
         <Route path='*' element={<Error404 />} />
       </Route>
+
+      <Route path='*' element={<Navigate to={'/'} />} />
     </Routes>
   );
 }

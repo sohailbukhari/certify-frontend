@@ -5,14 +5,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import * as Storage from '../../../utils/storage';
 
-const userStorage = Storage.getUser();
-
-const user = {
-  name: '',
-  email: userStorage.email || '',
-  imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-};
-
 const navigation = [
   { name: 'Dashboard', to: '/dashboard' },
   { name: 'Certificates', to: '/dashboard/certificates', role: 'applicant' },
@@ -27,6 +19,14 @@ function classNames(...classes) {
 export default function AdminHeader() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const userStorage = Storage.getUser();
+
+  const user = {
+    name: '',
+    email: userStorage ? userStorage.email : '',
+    imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  };
 
   const logout = () => {
     Storage.clearAll();
