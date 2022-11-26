@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard';
 import Setting from './pages/Setting';
 import Exam from './pages/Exam';
 import Error404 from './pages/Error404';
+import Certificate from './pages/Certificate';
 
 import { getAccessToken } from './utils/storage';
 
@@ -74,6 +75,7 @@ function App() {
         <Route path='' element={<Dashboard />} />
         <Route path='setting' element={<Setting />} />
         <Route path='exam' element={<Exam />} />
+        <Route path='certificates' element={<Certificate />} />
         <Route path='*' element={<Error404 />} />
       </Route>
 
