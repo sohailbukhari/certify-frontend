@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { clearUser, clearAccessToken, getUser } from '../../../utils/storage';
 
@@ -18,7 +18,7 @@ const navigation = [
   { name: 'Certificates', to: '/dashboard/certificates', role: 'applicant' },
   { name: 'Listing', to: '/dashboard/listing' },
 ];
-const userNavigation = [{ name: 'Settings', href: '/dashboard/setting' }];
+const userNavigation = [{ name: 'Settings', to: '/dashboard/setting' }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -26,6 +26,7 @@ function classNames(...classes) {
 
 export default function AdminHeader() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const logout = () => {
     clearAccessToken();
@@ -45,14 +46,17 @@ export default function AdminHeader() {
                 </div>
                 <div className='hidden md:block'>
                   <div className='ml-10 flex items-baseline space-x-4'>
-                    {navigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.to}
-                        className={classNames(item.current ? 'bg-sky-900 text-white' : 'text-gray-300 hover:bg-sky-700 hover:text-white', 'px-3 py-2 rounded-md text-sm font-medium')}>
-                        {item.name}
-                      </Link>
-                    ))}
+                    {navigation.map((item) => {
+                      const current = item.to === location.pathname;
+                      return (
+                        <Link
+                          key={item.name}
+                          to={item.to}
+                          className={classNames(current ? 'bg-sky-900 text-white' : 'text-gray-300 hover:bg-sky-700 hover:text-white', 'px-3 py-2 rounded-md text-sm font-medium')}>
+                          {item.name}
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -82,15 +86,17 @@ export default function AdminHeader() {
                       leaveFrom='transform opacity-100 scale-100'
                       leaveTo='transform opacity-0 scale-95'>
                       <Menu.Items className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                        {userNavigation.map((item) => (
-                          <Menu.Item key={item.name}>
-                            {({ active }) => (
-                              <Link href={item.href} className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}>
-                                {item.name}
-                              </Link>
-                            )}
-                          </Menu.Item>
-                        ))}
+                        {userNavigation.map((item) => {
+                          return (
+                            <Menu.Item key={item.name}>
+                              {({ active }) => (
+                                <Link to={item.to} className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}>
+                                  {item.name}
+                                </Link>
+                              )}
+                            </Menu.Item>
+                          );
+                        })}
 
                         <Menu.Item>
                           {({ active }) => (
@@ -120,7 +126,7 @@ export default function AdminHeader() {
                 <Disclosure.Button
                   key={item.name}
                   as='a'
-                  href={item.href}
+                  href={item.to}
                   className={classNames(item.current ? 'bg-sky-900 text-white' : 'text-gray-300 hover:bg-sky-700 hover:text-white', 'block px-3 py-2 rounded-md text-base font-medium')}
                   aria-current={item.current ? 'page' : undefined}>
                   {item.name}
@@ -145,7 +151,7 @@ export default function AdminHeader() {
               </div>
               <div className='mt-3 space-y-1 px-2'>
                 {userNavigation.map((item) => (
-                  <Disclosure.Button key={item.name} as='a' href={item.href} className='block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white'>
+                  <Disclosure.Button key={item.name} as='a' href={item.to} className='block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white'>
                     {item.name}
                   </Disclosure.Button>
                 ))}
