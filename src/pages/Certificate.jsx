@@ -2,8 +2,6 @@ import { useEffect, Fragment, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { InformationCircleIcon, PaperClipIcon, PrinterIcon } from '@heroicons/react/20/solid';
 import { Dialog, Transition } from '@headlessui/react';
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
-
 import dayjs from 'dayjs';
 
 import Loader from '../components/Loader';

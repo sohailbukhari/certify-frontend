@@ -14,6 +14,7 @@ import Error404 from './pages/Error404';
 import Certificate from './pages/Certificate';
 
 import { getAccessToken } from './utils/storage';
+import Listing from './pages/Listing';
 
 function RequireAuth({ children }) {
   let location = useLocation();
@@ -76,6 +77,7 @@ function App() {
         <Route path='setting' element={<Setting />} />
         <Route path='exam' element={<Exam />} />
         <Route path='certificates' element={<Certificate />} />
+        <Route path='listing' element={<Listing />} />
         <Route path='*' element={<Error404 />} />
       </Route>
 
