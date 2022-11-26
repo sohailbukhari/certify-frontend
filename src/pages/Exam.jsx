@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import Loader from '../components/Loader';
+
 import http from '../utils/http';
 
 const Exam = () => {
   const [categories, setCategories] = useState([]);
   const [choice, setChoice] = useState('');
+  const [loading, setLoading] = useState(true);
 
   // state variables for conduction test
   const [test, setTest] = useState(null);
@@ -80,8 +83,12 @@ const Exam = () => {
   };
 
   const getCurrentTest = async () => {
+    setLoading(true);
     try {
       const res = await http.get('/tests/currently-active');
+
+      const leftduration = calculateTimeLeft(res.data.data.expiry);
+      setTimeleft(leftduration);
 
       let skipPointer = 0;
 
@@ -96,10 +103,12 @@ const Exam = () => {
 
       setAnswers(res.data.data.answers);
       setTest(res.data.data);
-      const leftduration = calculateTimeLeft(res.data.data.expiry);
+
       if (leftduration.minutes < 5) toast.info('Hurry up time ending soon');
       else toast.info('Welcome Back');
     } catch (err) {}
+
+    setLoading(false);
   };
 
   setInterval(() => {
@@ -110,6 +119,8 @@ const Exam = () => {
     getCategories();
     getCurrentTest();
   }, []);
+
+  if (loading) return <Loader />;
 
   if (result)
     return (
@@ -183,7 +194,7 @@ const Exam = () => {
                     {test.questions[pointer].options.map((text, key) => {
                       const question_id = test.questions[pointer]._id;
 
-                      const current = answers[question_id] ? answers[question_id] === text : answer.answer === text ? true : false;
+                      const current = answers ? (answers[question_id] ? answers[question_id] === text : answer.answer === text ? true : false) : false;
 
                       return (
                         <li
