@@ -3,9 +3,9 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { clearUser, clearAccessToken, getUser } from '../../../utils/storage';
+import * as Storage from '../../../utils/storage';
 
-const userStorage = getUser();
+const userStorage = Storage.getUser();
 
 const user = {
   name: '',
@@ -16,7 +16,7 @@ const user = {
 const navigation = [
   { name: 'Dashboard', to: '/dashboard' },
   { name: 'Certificates', to: '/dashboard/certificates', role: 'applicant' },
-  { name: 'Listing', to: '/dashboard/listing' },
+  { name: 'Listing', to: '/dashboard/listing', role: 'hirer' },
 ];
 const userNavigation = [{ name: 'Settings', to: '/dashboard/setting' }];
 
@@ -48,6 +48,9 @@ export default function AdminHeader() {
                   <div className='ml-10 flex items-baseline space-x-4'>
                     {navigation.map((item) => {
                       const current = item.to === location.pathname;
+                      const display = item.role && userStorage.role === item.role;
+                      if (item.role && !display) return;
+
                       return (
                         <Link
                           key={item.name}
