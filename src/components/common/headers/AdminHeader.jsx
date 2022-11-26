@@ -29,8 +29,7 @@ export default function AdminHeader() {
   const location = useLocation();
 
   const logout = () => {
-    clearAccessToken();
-    clearUser();
+    Storage.clearAll();
     navigate('/login');
   };
 

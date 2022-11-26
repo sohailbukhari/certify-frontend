@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import Landing from './pages/Landing';
 import Layout from './pages/Layout';
 import Error404 from './pages/Error404';
+import Setting from './pages/Setting';
 
 import { getAccessToken } from './utils/storage';
 
@@ -63,6 +64,7 @@ function App() {
       />
       <Route path='/dashboard' element={<Layout />}>
         <Route path='' element={<Dashboard />} />
+        <Route path='setting' element={<Setting />} />
         <Route path='*' element={<Error404 />} />
       </Route>
     </Routes>
