@@ -14,6 +14,8 @@ export default function Setting() {
 
   const [passwords, setPasswords] = useState({});
 
+  const [amount, setAmount] = useState(0);
+
   const user = Storage.getUser();
 
   const getProfile = async () => {
@@ -54,6 +56,18 @@ export default function Setting() {
     }
     setLoading(false);
   };
+
+  const addBalance = async () => {
+    try {
+      await http.post('/profiles/topup', { amount });
+      toast.success('Balance added successfully');
+      getProfile();
+    } catch (err) {
+      toast.error('Oops! Something went wrong');
+    }
+  };
+
+  const changeBalanceAmount = (e) => setAmount(e.target.value);
 
   useEffect(() => {
     getProfile();
@@ -117,6 +131,33 @@ export default function Setting() {
           </div>
         </Form>
       </Formik>
+
+      {user.role === 'hirer' && (
+        <div className='overflow-hidden bg-white shadow sm:rounded-lg'>
+          <div className='flex justify-between items-center'>
+            <div className='px-4 py-5 sm:px-6'>
+              <h3 className='text-lg font-medium leading-6 text-gray-900'>Balance</h3>
+              <p className='mt-2 max-w-2xl text-sm text-gray-500'>Rs. {profile.balance}</p>
+            </div>
+            <div className='px-3'>
+              <button onClick={addBalance} className='border px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700' type='submit'>
+                Add Balance
+              </button>
+            </div>
+          </div>
+
+          <div className='border-t border-gray-200'>
+            <dl>
+              <div className='bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+                <dt className='text-sm font-medium text-gray-500'>Amount</dt>
+                <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
+                  <input type='number' value={amount} onChange={changeBalanceAmount} className='appearance-none	border py-2 px-3 rounded-lg' placeholder='Amount' name='amount' required />
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      )}
 
       <Formik initialValues={passwords} onSubmit={onPasswordSubmit}>
         <Form>

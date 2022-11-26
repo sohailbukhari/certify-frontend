@@ -9,6 +9,7 @@ const navigation = [
   { name: 'Dashboard', to: '/dashboard' },
   { name: 'Certificates', to: '/dashboard/certificates', role: 'applicant' },
   { name: 'Listing', to: '/dashboard/listing', role: 'hirer' },
+  { name: 'Accessible Profiles', to: '/dashboard/accessible-profiles', role: 'hirer' },
 ];
 const userNavigation = [{ name: 'Settings', to: '/dashboard/setting' }];
 
