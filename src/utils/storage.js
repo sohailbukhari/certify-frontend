@@ -10,5 +10,6 @@ export const getUser = () => {
   if (user) user = JSON.parse(user);
   return user;
 };
+
 export const setUser = (obj) => localStorage.setItem(USER, JSON.stringify(obj));
 export const clearUser = () => localStorage.removeItem(USER);
