@@ -2,14 +2,15 @@ import { useEffect, Fragment, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { InformationCircleIcon, PaperClipIcon, PrinterIcon } from '@heroicons/react/20/solid';
 import { Dialog, Transition } from '@headlessui/react';
+import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
 
 import Loader from '../components/Loader';
 
-import http from '../utils/http';
+import useGenerateCertificate from '../hooks/useGenerateCertificate';
 
 import NotFound from '../assets/not_found.svg';
-import { toast } from 'react-toastify';
+import http from '../utils/http';
 
 export default function Certificates() {
   const [loading, setLoading] = useState(true);
@@ -73,20 +74,8 @@ export default function Certificates() {
                 </tr>
               </thead>
               <tbody>
-                {certificates.reverse().map((certificate) => {
-                  return (
-                    <tr class='bg-white border-b hover:bg-gray-50'>
-                      <th scope='row' class='py-4 px-6 font-medium text-gray-900 whitespace-nowrap'>
-                        {certificate.category.replace('-', ' ').toUpperCase()}
-                      </th>
-                      <td class='py-4 px-6'>{certificate.test.score} %</td>
-                      <td class='py-4 px-6'>{dayjs(certificate.expiry).format('MMM D, YYYY h:mm A	')}</td>
-                      <td class='py-4 px-6'>{certificate.is_expired ? 'Expired' : 'Active'}</td>
-                      <td class='py-4 px-8 hover:cursor-pointer hover:text-sky-600'>
-                        <PrinterIcon className='w-6 h-6' />
-                      </td>
-                    </tr>
-                  );
+                {certificates.reverse().map((certificate, key) => {
+                  return <CertificateItem key={key} certificate={certificate} />;
                 })}
               </tbody>
             </table>
@@ -102,6 +91,32 @@ export default function Certificates() {
         </div>
       )}
     </div>
+  );
+}
+
+function CertificateItem({ certificate }) {
+  const [DownloadCertificate, CertificateHTML] = useGenerateCertificate(certificate);
+
+  const download = () => {
+    DownloadCertificate();
+  };
+  return (
+    <>
+      <div className='fixed bottom-0 h-0'>
+        <CertificateHTML />
+      </div>
+      <tr class='bg-white border-b hover:bg-gray-50'>
+        <th scope='row' class='py-4 px-6 font-medium text-gray-900 whitespace-nowrap'>
+          {certificate.category.replace('-', ' ').toUpperCase()}
+        </th>
+        <td class='py-4 px-6'>{certificate.test.score} %</td>
+        <td class='py-4 px-6'>{dayjs(certificate.expiry).format('MMM D, YYYY h:mm A	')}</td>
+        <td class='py-4 px-6'>{certificate.is_expired ? 'Expired' : 'Active'}</td>
+        <td class='py-4 px-8 hover:cursor-pointer hover:text-sky-600' onClick={download}>
+          <PrinterIcon className='w-6 h-6' />
+        </td>
+      </tr>
+    </>
   );
 }
 

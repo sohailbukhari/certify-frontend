@@ -12,10 +12,10 @@ import Setting from './pages/Setting';
 import Exam from './pages/Exam';
 import Error404 from './pages/Error404';
 import Certificate from './pages/Certificate';
-
-import { getAccessToken } from './utils/storage';
 import Listing from './pages/Listing';
 import AccessibleProfiles from './pages/AccessibleProfiles';
+
+import { getAccessToken } from './utils/storage';
 
 function RequireAuth({ children }) {
   let location = useLocation();
