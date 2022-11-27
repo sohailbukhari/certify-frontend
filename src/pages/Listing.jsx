@@ -93,8 +93,7 @@ const Listing = () => {
             </thead>
             <tbody>
               {listing.map((doc) => {
-                console.log(doc);
-
+                if (profile.accessible_profiles.includes(doc.profile)) return;
                 return (
                   <tr className='bg-white border-b hover:bg-gray-50'>
                     <th scope='row' className='py-4 px-6 font-medium text-gray-900 whitespace-nowrap'>
@@ -185,10 +184,9 @@ function BidPopup({ open, setOpen, profile, listingId, getListing }) {
                           The Amount will be <strong>deducted from your balance</strong> once the <strong>listing expire</strong> for the profile and it will get available in your{' '}
                           <strong>Accessible Profiles</strong> section.
                         </p>
-                        <p className='text-red-500 text-sm mt-2'>
+                        {/* <p className='text-red-500 text-sm mt-2'>
                           <span className='font-bold'>Note:</span> You are low on balance.
-                        </p>
-
+                        </p> */}
                         <input type='number' className='mt-2 appearance-none	border py-2 px-3 rounded-lg' placeholder='Amount' name='amount' onChange={onChange} value={amount} required />
                       </div>
                     </div>
