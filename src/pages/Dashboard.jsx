@@ -44,6 +44,8 @@ function UploadResume({ profile }) {
   };
 
   const onUpload = async () => {
+    if (!file) return toast.warning('choose file to upload first');
+
     toast.info('File uploading...');
 
     try {
