@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import Loader from '../components/Loader';
+import useProfile from '../hooks/useProfile';
+import http from '../utils/http';
 
 import * as Storage from '../utils/storage';
 
 const Dashboard = () => {
   const user = Storage.getUser();
+
+  const [profile, getProfile, loading] = useProfile();
+
+  if (loading) return <Loader />;
 
   if (user.role === 'hirer')
     return (
@@ -15,12 +23,72 @@ const Dashboard = () => {
 
   return (
     <div className='px-4 py-6 sm:px-0'>
+      <UploadResume profile={profile} />
       <StartTest />
     </div>
   );
 };
 
 export default Dashboard;
+
+function UploadResume({ profile }) {
+  const [file, setFile] = useState(null);
+  const [link, setLink] = useState(profile && profile.resume);
+
+  const onDownload = () => {
+    window.open(profile.resume);
+  };
+
+  const onFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const onUpload = async () => {
+    toast.info('File uploading...');
+
+    try {
+      const form = new FormData();
+      form.append('file', file);
+
+      const res = await http.put('/profiles/upload-resume', form);
+      setFile(res.data.data.resume);
+
+      toast.success('File uploaded successfully');
+    } catch (err) {
+      toast.error('Oops, error uploading');
+    }
+  };
+
+  return (
+    <div className='overflow-hidden bg-white shadow sm:rounded-lg'>
+      <div className='flex justify-between items-center'>
+        <div className='px-4 py-5 sm:px-6'>
+          <h3 className='text-lg font-medium leading-6 text-gray-900'>Upload Resume</h3>
+          <div className='w-60'>
+            <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' htmlFor='file_input'>
+              Upload Resume
+            </label>
+            <input className='block w-full text-sm text-gray-900  rounded-lg cursor-pointer ' aria-describedby='file_input_help' id='file_input' type='file' onChange={onFileChange} />
+            <p className='mt-1 text-sm text-gray-400' id='file_input_help'>
+              DOC, DOCX or PDF.
+            </p>
+          </div>
+        </div>
+
+        <div className='px-3'>
+          {link && (
+            <button onClick={onDownload} className='border px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700' type='submit'>
+              Download
+            </button>
+          )}
+          <button onClick={onUpload} className='border px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700' type='submit'>
+            Upload
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function StartTest() {
   const navigate = useNavigate();
