@@ -36,7 +36,7 @@ function UploadResume({ profile }) {
   const [link, setLink] = useState(profile && profile.resume);
 
   const onDownload = () => {
-    window.open(profile.resume);
+    window.open(link);
   };
 
   const onFileChange = (e) => {
@@ -51,7 +51,7 @@ function UploadResume({ profile }) {
       form.append('file', file);
 
       const res = await http.put('/profiles/upload-resume', form);
-      setFile(res.data.data.resume);
+      setLink(res.data.data.resume);
 
       toast.success('File uploaded successfully');
     } catch (err) {
