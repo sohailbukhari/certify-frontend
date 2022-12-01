@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import Loader from '../components/Loader';
+
 import useProfile from '../hooks/useProfile';
+
 import http from '../utils/http';
 
 import * as Storage from '../utils/storage';
@@ -65,10 +68,10 @@ function UploadResume({ profile }) {
     <div className='overflow-hidden bg-white shadow sm:rounded-lg'>
       <div className='flex justify-between items-center'>
         <div className='px-4 py-5 sm:px-6'>
-          <h3 className='text-lg font-medium leading-6 text-gray-900'>Upload Resume</h3>
+          <h3 className='text-lg font-medium leading-6 text-gray-900'>{link ? 'Update Resume' : 'Upload Resume'}</h3>
           <div className='w-60'>
             <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' htmlFor='file_input'>
-              Upload Resume
+              {link ? 'Update Resume' : 'Upload Resume'}
             </label>
             <input className='block w-full text-sm text-gray-900  rounded-lg cursor-pointer ' aria-describedby='file_input_help' id='file_input' type='file' onChange={onFileChange} />
             <p className='mt-1 text-sm text-gray-400' id='file_input_help'>
@@ -77,10 +80,12 @@ function UploadResume({ profile }) {
           </div>
         </div>
 
-        <div className='px-3'>
+        <div className='px-3 flex justify-center items-center'>
           {link && (
-            <button onClick={onDownload} className='border px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700' type='submit'>
-              Download
+            <button onClick={onDownload} className='mr-4 border p-2 rounded-full bg-sky-600 text-white hover:bg-sky-700' type='submit'>
+              <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
+                <path strokeLinecap='round' strokeLinejoin='round' d='M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3' />
+              </svg>
             </button>
           )}
           <button onClick={onUpload} className='border px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700' type='submit'>

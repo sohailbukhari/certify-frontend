@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { EyeIcon } from '@heroicons/react/20/solid';
+import { ArrowDownTrayIcon, ExclamationCircleIcon } from '@heroicons/react/20/solid';
 
 import Loader from '../components/Loader';
 
@@ -18,6 +18,10 @@ const AccessibleProfiles = () => {
     setLoading(false);
   };
 
+  const onDownload = (link) => {
+    window.open(link);
+  };
+
   useEffect(() => {
     getUnlockedProfiles();
   }, []);
@@ -31,6 +35,9 @@ const AccessibleProfiles = () => {
           <thead class='text-xs text-gray-700 uppercase bg-gray-50'>
             <tr>
               <th scope='col' class='py-3 px-6'>
+                Image
+              </th>
+              <th scope='col' class='py-3 px-6'>
                 Candidate
               </th>
               <th scope='col' class='py-3 px-6'>
@@ -40,7 +47,7 @@ const AccessibleProfiles = () => {
                 Phone
               </th>
               <th scope='col' class='py-3 px-6'>
-                Action
+                Resume
               </th>
             </tr>
           </thead>
@@ -48,11 +55,14 @@ const AccessibleProfiles = () => {
             {profiles.map((profile) => {
               return (
                 <tr class='bg-white border-b hover:bg-gray-50'>
+                  <td class='py-4 px-6'>
+                    <img data-tooltip-target='tooltip-jese' class='w-10 h-10 rounded' src={profile.image} alt='Profile' />
+                  </td>
                   <td class='py-4 px-6'>{profile.name}</td>
                   <td class='py-4 px-6'>{profile.cnic}</td>
                   <td class='py-4 px-6'>{profile.phone}</td>
                   <td class='py-4 px-8 hover:cursor-pointer hover:text-sky-600'>
-                    <EyeIcon className='w-6 h-6' />
+                    {profile.resume ? <ArrowDownTrayIcon className='w-6 h-6' onClick={() => onDownload(profile.resume)} /> : <ExclamationCircleIcon className='w-6 h-6' />}
                   </td>
                 </tr>
               );

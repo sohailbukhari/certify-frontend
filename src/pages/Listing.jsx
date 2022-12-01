@@ -93,12 +93,12 @@ const Listing = () => {
             </thead>
             <tbody>
               {listing.map((doc) => {
-                if (profile.accessible_profiles.includes(doc.profile)) return;
+                if (profile.accessible_profiles.includes(doc.profile._id)) return;
                 return (
                   <tr className='bg-white border-b hover:bg-gray-50'>
                     <th scope='row' className='py-4 px-6 font-medium text-gray-900 whitespace-nowrap'>
                       <div className='p-3 rounded-full bg-sky-100 max-w-max'>
-                        <UserCircleIcon className='w-10 h-10 text-sky-500' />
+                        {doc.profile.image ? <img className='w-10 h-10 rounded-full object-cover' src={doc.profile.image} /> : <UserCircleIcon className='w-10 h-10 text-sky-500' />}
                       </div>
                     </th>
                     <td className='py-4 px-6'> {doc.category.replace('-', ' ').toUpperCase()}</td>
