@@ -16,6 +16,8 @@ import Listing from './pages/Listing';
 import AccessibleProfiles from './pages/AccessibleProfiles';
 
 import { getAccessToken } from './utils/storage';
+import { isProfileComplete } from './utils/common';
+import CompleteProfile from './pages/CompleteProfile';
 
 function RequireAuth({ children }) {
   let location = useLocation();
@@ -24,6 +26,9 @@ function RequireAuth({ children }) {
   if (!accessToken) {
     return <Navigate to='/login' state={{ from: location }} replace />;
   }
+
+  const isProfileActive = isProfileComplete();
+  if (!isProfileActive && !['/dashboard/setting', '/dashboard/complete-profile'].includes(location.pathname)) return <Navigate to='/dashboard/complete-profile' state={{ from: location }} replace />;
 
   return children;
 }
@@ -80,6 +85,7 @@ function App() {
         <Route path='certificates' element={<Certificate />} />
         <Route path='listing' element={<Listing />} />
         <Route path='accessible-profiles' element={<AccessibleProfiles />} />
+        <Route path='complete-profile' element={<CompleteProfile />} />
         <Route path='*' element={<Error404 />} />
       </Route>
 
