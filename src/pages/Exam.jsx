@@ -5,6 +5,9 @@ import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
 
 import http from '../utils/http';
+import { getProfile } from '../utils/storage';
+
+const MINIMUM_BALANCE = Number(import.meta.env.VITE_TEST_MINIMUM_BALANCE);
 
 const Exam = () => {
   const [categories, setCategories] = useState([]);
@@ -20,6 +23,8 @@ const Exam = () => {
   const [answers, setAnswers] = useState({});
 
   const [result, setResult] = useState(null);
+
+  const profile = getProfile();
 
   const navigate = useNavigate();
 
@@ -63,7 +68,7 @@ const Exam = () => {
       setTest(res.data.data);
       toast.success('Best of luck!');
     } catch (err) {
-      toast.error('Oops! Something went wrong');
+      toast.error(err.response.data.message || 'Oops! Something went wrong');
     }
   };
 
@@ -256,12 +261,19 @@ const Exam = () => {
               })}
             </select>
           </div>
-          {choice && (
-            <div className='px-3'>
-              <button onClick={startTest} className='border px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700' type='submit'>
-                Start Test
-              </button>
+          {profile.balance < MINIMUM_BALANCE ? (
+            <div className='px-6 text-center space-y-1 text-red-500'>
+              <h2 className='text-lg font-bold border-b'>Rs {MINIMUM_BALANCE}</h2>
+              <p className='text-sm'>Minimum Wallet Balance Required</p>
             </div>
+          ) : (
+            choice && (
+              <div className='px-3'>
+                <button onClick={startTest} className='border px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700' type='submit'>
+                  Start Test
+                </button>
+              </div>
+            )
           )}
         </div>
       </div>
